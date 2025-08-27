@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Simran</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #ffe6f0;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Start Screen */
+  #start-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+
+  #openBtn {
+    background: #ff4081;
+    color: #fff;
+    border: none;
+    padding: 20px 40px;
+    font-size: 24px;
+    border-radius: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  /* Celebration Animation */
+  #celebration {
+    display: none;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #fff0f5;
+    font-size: 40px;
+    font-weight: bold;
+    color: #e91e63;
+    flex-direction: column;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .celebration-text {
+    animation: scaleUp 1.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleUp {
+    0% { transform: scale(1); }
+    100% { transform: scale(1.2); color: #ff1493; }
+  }
+
+  /* Main Album Container */
+  #album-container {
+    display: none;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 200px);
+    grid-gap: 20px;
+    justify-content: center;
+    margin: 20px auto;
+  }
+
+  .photo-grid img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+  }
+
+  .birthday-text {
+    font-size: 24px;
+    color: #e91e63;
+    font-weight: bold;
+    margin: 20px 0;
+  }
+
+  .navigation {
+    margin-top: 20px;
+  }
+
+  .btn {
+    background-color: #e91e63;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+</style>
+</head>
+<body>
+
+<!-- Start Screen -->
+<div id="start-screen">
+  <button id="openBtn">🎂 Tap to Open</button>
+</div>
+
+<!-- Celebration Screen -->
+<div id="celebration">
+  <div class="celebration-text">🎉 HAPPY 20TH BIRTHDAY 🎉</div>
+</div>
+
+<!-- Album Container -->
+<div id="album-container">
+  <h2>Forever & Always </h2>
+  <p>Happy 20th birthday, Simran ❤️🎉! I just want you to know how proud I am of the person you’ve become. 
+    I’ve seen how hard you’ve been working , chasing your dreams and carrying so much strength in your heart. 
+    You may be far away, but your kindness, determination, and pure soul always inspire me. 
+    I’m so lucky to have you as my no 1  , i don't have many friends but you are singley enough for me that is all i want .
+    No matter where life takes you, remember you are loved, cherished, and never alone.
+    I have seen you cry(360 method fav),happy ,sad ,stressed  but i am certain that no one 
+    is more stronger than you ,I can see your struggle and how you manage to make 
+      your loved ones happy around you .You are multitalented with beauty ,brain ,determination and everyone wishes 
+    to have a daughter like you  aunty  and uncle is really lucky to have you ,you have made your parents really proud i am really happy to see you
+    grow everyday envolving ,glooming and growing . lastly you might hate me but i love you and always choose you enjoy your day chuppppa .(also loving your tiktok's teej wala ani saree wala fav )
+     💕</p>
+
+  <div id="photo-container" class="photo-grid"></div>
+
+  <div class="birthday-text">🎉 Happy Birthday Simran! 🎉</div>
+
+  <div class="navigation">
+    <button id="prevBtn" class="btn">⬅ Prev</button>
+    <button id="nextBtn" class="btn">Next ➡</button>
+  </div>
+</div>
+
+<script>
+  // Start button logic
+  const openBtn = document.getElementById('openBtn');
+  const startScreen = document.getElementById('start-screen');
+  const celebration = document.getElementById('celebration');
+  const albumContainer = document.getElementById('album-container');
+
+  openBtn.addEventListener('click', () => {
+    startScreen.style.display = 'none';
+    celebration.style.display = 'flex';
+    // After 3 seconds, show album
+    setTimeout(() => {
+      celebration.style.display = 'none';
+      albumContainer.style.display = 'block';
+    }, 1000);
+  });
+
+  // Photos for album
+  const photos = [
+    '1.jpg', '2.jpg', '3.jpg', '4.jpg',
+    '5.jpg', '6.jpg', '7.jpg', '8.jpg',
+    '9.jpg', '10.jpg', '11.jpg', '12.jpg',
+    '13.jpg', '14.jpg', '15.jpg', '16.jpg',
+    '17.jpg', '18.jpg', '19.jpg', '20.jpg'
+  ];
+
+  const photosPerPage = 4;
+  const totalPages = Math.ceil(photos.length / photosPerPage);
+
+  let currentPage = 1;
+
+  function renderPhotos() {
+    const start = (currentPage - 1) * photosPerPage;
+    const end = start + photosPerPage;
+    const currentPhotos = photos.slice(start, end);
+
+    const container = document.getElementById('photo-container');
+    container.innerHTML = '';
+
+    currentPhotos.forEach(photo => {
+      const img = document.createElement('img');
+      img.src = photo;
+      container.appendChild(img);
+    });
+
+    document.getElementById('prevBtn').disabled = currentPage === 1;
+    document.getElementById('nextBtn').disabled = currentPage === totalPages;
+  }
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    if (currentPage > 1) {
+      currentPage--;
+      renderPhotos();
+    }
+  });
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderPhotos();
+    }
+  });
+
+  renderPhotos();
+</script>
+
+</body>
+</html>
